@@ -4,6 +4,8 @@ A natural language processing project for detecting duplicate question pairs on 
 
 Repository: https://github.com/shahndaa/Quora-Question-Pair-Similarity
 
+Live demo: https://quora-question-pair-similarity.streamlit.app
+
 ---
 
 ## Table of Contents
