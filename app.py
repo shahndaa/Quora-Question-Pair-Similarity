@@ -103,9 +103,9 @@ st.caption("Type two questions below to check whether they're asking the same th
 
 col1, col2 = st.columns(2)
 with col1:
-    question1 = st.text_area("Question 1", "How do I learn Python quickly?", height=100)
+    question1 = st.text_area("Question 1", "How do I improve my communication skills?", height=100)
 with col2:
-    question2 = st.text_area("Question 2", "What is the fastest way to learn Python?", height=100)
+    question2 = st.text_area("Question 2", "How can I improve my communication skills?", height=100)
 
 use_deep = st.checkbox(
     "Also try the deep learning model (Siamese LSTM)",
