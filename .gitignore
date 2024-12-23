@@ -1,0 +1,24 @@
+# Data (the full dataset is large; download instructions are in the README)
+data/train.csv
+data/*.csv.zip
+
+# Trained model artifacts are committed (see models/) since they are
+# reasonably small (~40MB total). Only ignore ad-hoc/local retraining output.
+models/_size_check.joblib
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# gensim / nltk caches (downloaded automatically on first run)
+gensim-data/
+
+# OS
+.DS_Store
