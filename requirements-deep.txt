@@ -1,0 +1,9 @@
+# Optional: only needed to train or run the Siamese LSTM deep learning model
+# (train.py --model deep/both, predict.py --model deep, or the "deep
+# learning" checkbox in app.py). Install with:
+#   pip install -r requirements.txt -r requirements-deep.txt
+#
+# Not included in requirements.txt because TensorFlow wheel availability
+# lags behind new Python releases; if installation fails, use Python 3.11
+# or 3.12 in your environment.
+tensorflow-cpu>=2.15
