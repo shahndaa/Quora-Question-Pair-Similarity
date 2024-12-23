@@ -82,7 +82,7 @@ def predict_classical(q1: str, q2: str):
 
     X = scaler.transform(features)
     proba = model.predict_proba(X)[0, 1]
-    return proba, features.iloc[0]
+    return float(proba), features.iloc[0]
 
 
 def predict_deep(q1: str, q2: str):
@@ -134,7 +134,7 @@ if st.button("Check similarity", type="primary"):
 
             label = "🟢 Likely DUPLICATE" if proba_classical >= 0.5 else "🔴 Likely NOT a duplicate"
             st.subheader(f"Classical model: {label}")
-            st.progress(min(max(proba_classical, 0.0), 1.0))
+            st.progress(float(min(max(proba_classical, 0.0), 1.0)))
             st.write(f"Duplicate probability: **{proba_classical:.1%}**")
 
             with st.expander("See underlying similarity features"):
@@ -147,7 +147,7 @@ if st.button("Check similarity", type="primary"):
 
                 label_deep = "🟢 Likely DUPLICATE" if proba_deep >= 0.5 else "🔴 Likely NOT a duplicate"
                 st.subheader(f"Deep learning model (Siamese LSTM): {label_deep}")
-                st.progress(min(max(proba_deep, 0.0), 1.0))
+                st.progress(float(min(max(proba_deep, 0.0), 1.0)))
                 st.write(f"Duplicate probability: **{proba_deep:.1%}**")
         except FileNotFoundError:
             st.error(
