@@ -1,0 +1,15 @@
+# Core dependencies: the classical pipeline, the demo app, and testing.
+# Intentionally excludes TensorFlow (see requirements-deep.txt) so that
+# `pip install -r requirements.txt` stays lightweight and installable
+# everywhere, including hosting platforms that may run a newer Python
+# version than TensorFlow currently publishes wheels for.
+pandas>=2.0
+numpy>=1.24
+scikit-learn>=1.3
+xgboost>=2.0
+nltk>=3.8
+gensim>=4.3
+rapidfuzz>=3.5
+streamlit>=1.30
+joblib>=1.3
+pytest>=7.4
