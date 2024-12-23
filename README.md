@@ -209,11 +209,13 @@ XGBoost is saved as the deployed classical model. It does not have the highest F
 
 | Metric | Value |
 |---|---|
-| Accuracy | 0.836 |
-| ROC-AUC | 0.915 |
+| Accuracy | 0.840 |
+| ROC-AUC | 0.919 |
 | Loss (binary cross-entropy) | 0.358 |
 
 The deep learning model outperforms every classical model by a clear margin, which is consistent with expectations: a sequence model that processes questions in order can capture compositional and contextual meaning (negation, word order, multi-word phrases) that a bag-of-features representation cannot.
+
+**A known limitation:** both models rely on general-purpose GloVe embeddings trained on Wikipedia and news text, so neither reliably recognizes domain-specific paraphrases outside that vocabulary — for example, "How can one get rid of gynecomastia?" and "How can I get rid of man boobs?" are a true duplicate pair in the dataset, but both models score them as unlikely duplicates, since the medical term and its colloquial equivalent are not close together in general-purpose embedding space. This is a genuine property of the embeddings used, not a training bug; it would require domain-adapted or contextual embeddings (e.g. a transformer fine-tuned on this data) to fix.
 
 ## Testing
 
