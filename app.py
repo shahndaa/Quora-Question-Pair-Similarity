@@ -24,7 +24,6 @@ from models_classical import load_artifact
 MODEL_DIR = Path("models")
 GLOVE_NAME = "glove-wiki-gigaword-100"
 GLOVE_DIM = 100
-MAX_LEN = 30
 
 
 def _deep_learning_available() -> bool:
@@ -60,7 +59,11 @@ def load_deep_artifacts():
 
     model = tf.keras.models.load_model(MODEL_DIR / "deep_model.keras")
     tokenizer = load_artifact(MODEL_DIR / "tokenizer.joblib")
-    return model, tokenizer
+    # Read the sequence length the model was actually trained with, rather
+    # than assuming a hardcoded value that can silently drift out of sync
+    # with whatever --max-len train.py was run with.
+    max_len = model.inputs[0].shape[1]
+    return model, tokenizer, max_len
 
 
 def predict_classical(q1: str, q2: str):
@@ -88,9 +91,9 @@ def predict_classical(q1: str, q2: str):
 def predict_deep(q1: str, q2: str):
     from models_deep import texts_to_padded
 
-    model, tokenizer = load_deep_artifacts()
-    q1_pad = texts_to_padded(tokenizer, [clean_for_embeddings(q1)], MAX_LEN)
-    q2_pad = texts_to_padded(tokenizer, [clean_for_embeddings(q2)], MAX_LEN)
+    model, tokenizer, max_len = load_deep_artifacts()
+    q1_pad = texts_to_padded(tokenizer, [clean_for_embeddings(q1)], max_len)
+    q2_pad = texts_to_padded(tokenizer, [clean_for_embeddings(q2)], max_len)
     proba = model.predict({"question1": q1_pad, "question2": q2_pad}, verbose=0)[0, 0]
     return float(proba)
 

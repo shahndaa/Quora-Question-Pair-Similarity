@@ -61,12 +61,20 @@ def predict_classical(q1: str, q2: str, model_dir: Path, glove_name: str, glove_
     return float(proba)
 
 
-def predict_deep(q1: str, q2: str, model_dir: Path, max_len: int) -> float:
+def predict_deep(q1: str, q2: str, model_dir: Path, max_len: int | None = None) -> float:
     import tensorflow as tf
     from models_deep import texts_to_padded
 
     model = tf.keras.models.load_model(model_dir / "deep_model.keras")
     tokenizer = load_artifact(model_dir / "tokenizer.joblib")
+
+    # Prefer the sequence length the model was actually trained with over
+    # whatever --max-len was passed in, so a stale CLI default can't cause a
+    # shape mismatch against the saved model.
+    model_max_len = model.inputs[0].shape[1]
+    if max_len is not None and max_len != model_max_len:
+        print(f"Note: ignoring --max-len {max_len}; the saved model expects {model_max_len}.")
+    max_len = model_max_len
 
     q1_pad = texts_to_padded(tokenizer, [clean_for_embeddings(q1)], max_len)
     q2_pad = texts_to_padded(tokenizer, [clean_for_embeddings(q2)], max_len)
